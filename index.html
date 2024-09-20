@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Heroes & Havoc</title>
+    <link rel="stylesheet" href="main-style.css">
+</head>
+<body>
+<div id="mainGameContainer">
+    <div id="tooltip" class="tooltip"></div>
+
+    <div id="sidebar">
+        <button class="sidebar-button" id="buttonYourHero">YOUR HERO</button>
+
+        <button class="sidebar-button" id="buttonNoticeBoard">NOTICE BOARD</button>
+        <button class="sidebar-button" id="buttonJob">WORK FOR GOLD</button>
+
+        <button class="sidebar-button" id="buttonBlacksmith">BLACKSMITH</button>
+        <button class="sidebar-button" id="buttonArmorSmith">ARMOR SMITH</button>
+        <button disabled class="sidebar-button" id="buttonEnchantress">ENCHANTRESS</button>
+        <button disabled class="sidebar-button" id="buttonArena">ARENA</button>
+        <button class="sidebar-button" id="buttonHunt">HUNT</button>
+        <button disabled class="sidebar-button" id="buttonDungeon">DUNGEON</button>
+
+
+
+    </div>
+    <div id="content">
+        <div class="main-content">
+<!--            shop-->
+
+            <div class="ui-shadow" id="storeImage"><div class="contentLabel" id="weaponShopLabel">WEAPONS</div><img src="images/forge-1.png" width="300" height="240"></div>
+            <div class="inventory-section">
+                <div class="tabs">
+                    <div class="awesome-tabs" id="storeTabs">
+                        <button class="awesome-tab active-tab">I</button>
+                        <button class="awesome-tab">II</button>
+                        <button disabled class="awesome-tab disabled-tab">III</button>
+                        <button disabled class="awesome-tab disabled-tab">IV</button>
+                        <button disabled class="awesome-tab disabled-tab">V</button>
+                        <button disabled class="awesome-tab disabled-tab">VI</button>
+                    </div>
+                </div>
+                <div class="shop ui-shadow">
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                    <div class="slot shop-slot"></div>
+                </div>
+            </div>
+        </div>
+        <div class="player-inventory">
+            <div class="equipment-section ui-shadow">
+                <div class="equipment" id="leftEquipment">
+                    <div class="slot" id="helmet-slot" data-slot-type="helmet"></div>
+                    <div class="slot" id="armor-slot" data-slot-type="armor"></div>
+                    <div class="slot" id="belt-slot" data-slot-type="belt"></div>
+                    <div class="slot" id="ring-slot-1" data-slot-type="ring"></div>
+                    <div class="slot" id="weapon-slot" data-slot-type="weapon"></div>
+                </div>
+                <div class="character" id="characterImage">
+                    <img src="images/warrior-image-placeholder.png" alt="warrior stands here">
+                </div>
+                <div class="equipment" id="rightEquipment">
+                    <div class="slot" id="pants-slot" data-slot-type="pants"></div>
+                    <div class="slot" id="boots-slot" data-slot-type="boots"></div>
+                    <div class="slot" id="neck-slot" data-slot-type="neck"></div>
+                    <div class="slot" id="ring-slot-2" data-slot-type="ring"></div>
+                    <div class="slot" id="offhand-slot" data-slot-type="offhand"></div>
+                </div>
+            </div>
+            <div class="inventory-section">
+                <div class="tabs">
+                    <div class="awesome-tabs" id="inventoryTabs">
+                        <button class="awesome-tab active-tab">I</button>
+                        <button class="awesome-tab">II</button>
+                        <button disabled class="awesome-tab disabled-tab">III</button>
+                        <button disabled class="awesome-tab disabled-tab">IV</button>
+                        <button disabled class="awesome-tab disabled-tab">V</button>
+                        <button disabled class="awesome-tab disabled-tab">VI</button>
+                    </div>
+                </div>
+                <div class="inventory ui-shadow">
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                    <div class="grid-cell slot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="inventory.js"></script>
+</body>
+</html>
