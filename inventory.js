@@ -1,6 +1,15 @@
 const equipmentSlots = document.querySelectorAll('.slot');
 
 let playerLvl = 10
+let gold = 3000;
+
+const goldDisplay = document.getElementById("goldCount");
+
+function updateStatsDisplay(){
+    goldDisplay.innerText = gold;
+}
+updateStatsDisplay()
+
 
 const attributes = ["Strength", "Vitality", "Crit Chance", "Crit Damage", "Agility"];
 const secondaryAttributes = ["Extra Gold", "Extra Experience", "Lower Quest Time"];
@@ -174,6 +183,17 @@ document.addEventListener('dragover', (e) => {
 // Handle dropping an item into a grid cell or equipment slot
 document.addEventListener('drop', (e) => {
     const dropTarget = e.target;
+    if (originCell.classList.contains("shop-slot")){
+        if (gold > draggedItem.getAttribute("data-value")) {
+            gold -= draggedItem.getAttribute("data-value")
+            console.log("good value")
+            updateStatsDisplay();
+        }
+        else {
+            console.log("Item too expensive!")
+            return
+        }
+    }
 
     // Handling Grid Cell Drop
     if (dropTarget.classList.contains('grid-cell')) {
