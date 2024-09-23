@@ -1,15 +1,37 @@
 const equipmentSlots = document.querySelectorAll('.slot');
 
+const itemCreateEvent = new Event("item-create");
+
 let playerLvl = 10
 let gold = 3000;
 
 const goldDisplay = document.getElementById("goldCount");
 
-function updateStatsDisplay(){
+function updateStatsDisplay() {
     goldDisplay.innerText = gold;
 }
 updateStatsDisplay()
 
+const shopTypes = ["weapon", "armor", "magic"];
+let currentStoreType = "weapon";
+
+const weaponStoreButton = document.getElementById("buttonBlacksmith");
+const armorStoreButton = document.getElementById("buttonArmorSmith");
+const magicStoreButton = document.getElementById("buttonEnchantress");
+
+weaponStoreButton.onclick = () => {
+    currentStoreType = "weapon";
+    fillStore();
+}
+armorStoreButton.onclick = () => {
+    currentStoreType = "armor";
+    fillStore();
+}
+
+magicStoreButton.onclick = () => {
+    currentStoreType = "magic";
+    fillStore();
+}
 
 const attributes = ["Strength", "Vitality", "Crit Chance", "Crit Damage", "Agility"];
 const secondaryAttributes = ["Extra Gold", "Extra Experience", "Lower Quest Time"];
@@ -44,7 +66,7 @@ function generateItem(type, name) {
     for (let i = 0; i < attributeCount; i++) {
         let attrKey = attributes[Math.floor(Math.random() * attributes.length)];
         while (item.attributes[attrKey]) attrKey = attributes[Math.floor(Math.random() * attributes.length)];
-        let attrValue = Math.floor((Math.random() * 40 + 60)* (playerLvl/2)**2/100);
+        let attrValue = Math.floor((Math.random() * 40 + 60) * (playerLvl / 2) ** 2 / 100);
         if (attrValue === 0) attrValue = 3;
 
         item.attributes[attrKey] = attrValue;
@@ -139,19 +161,38 @@ function placeAllItems() {
 placeAllItems();
 
 
-const storeItems = [];
-for (let i = 0; i < 24; i++) {
-    storeItems[i] = generateItem("weapon");
+function fillStore() {
+    let possibleItems = []
+    switch (currentStoreType) {
+        case "weapon":
+            possibleItems = ["weapon", "offhand"];
+            break;
+        case "armor":
+            possibleItems = ["armor", "pants", "helmet", "boots"];
+            break;
+        case "magic":
+            possibleItems = ["ring", "neck"];
+            break;
+    }
+    const storeItems = [];
+    for (let i = 0; i < 24; i++) {
+        storeItems[i] = generateItem(possibleItems[Math.floor(Math.random() * possibleItems.length)]);
+        placeItemInStore(storeItems[i], i);
+    }
 
-    placeItemInStore(storeItems[i], i);
 }
+
+fillStore()
+
 
 // Place the items in the inventory grid
 function placeItemInStore(item, gridCellIndex) {
     console.log(document.querySelectorAll(".shop-slot"));
     const cell = document.querySelectorAll('.shop-slot')[gridCellIndex];
+    cell.innerHTML = ""
     const itemElement = createItemElement(item);
     cell.appendChild(itemElement);
+    document.dispatchEvent(itemCreateEvent);
 }
 
 
@@ -183,13 +224,12 @@ document.addEventListener('dragover', (e) => {
 // Handle dropping an item into a grid cell or equipment slot
 document.addEventListener('drop', (e) => {
     const dropTarget = e.target;
-    if (originCell.classList.contains("shop-slot")){
+    if (originCell.classList.contains("shop-slot")) {
         if (gold > draggedItem.getAttribute("data-value")) {
             gold -= draggedItem.getAttribute("data-value")
             console.log("good value")
             updateStatsDisplay();
-        }
-        else {
+        } else {
             console.log("Item too expensive!")
             return
         }
@@ -313,10 +353,13 @@ function hideTooltip() {
     tooltip.style.display = 'none';
 }
 
-// Attach the event listeners to the items
-document.querySelectorAll('.item').forEach(item => {
-    item.addEventListener('mouseover', showTooltip);
-    item.addEventListener('mousemove', showTooltip); // For continuous position update
-    item.addEventListener('mouseout', hideTooltip);
-    item.addEventListener('mousedown', hideTooltip)
-});
+document.addEventListener("item-create", ()=> {
+    // Attach the event listeners to the items
+    document.querySelectorAll('.item').forEach(item => {
+        item.addEventListener('mouseover', showTooltip);
+        item.addEventListener('mousemove', showTooltip); // For continuous position update
+        item.addEventListener('mouseout', hideTooltip);
+        item.addEventListener('mousedown', hideTooltip)
+    });
+})
+
