@@ -1,5 +1,7 @@
 const equipmentSlots = document.querySelectorAll('.slot');
 
+import {storeHTML} from "./components.js";
+
 const itemCreateEvent = new Event("item-create");
 
 let playerLvl = 10
@@ -21,22 +23,30 @@ const magicStoreButton = document.getElementById("buttonEnchantress");
 
 weaponStoreButton.onclick = () => {
     currentStoreType = "weapon";
+    setStoreHTML();
     fillStore();
 }
 armorStoreButton.onclick = () => {
     currentStoreType = "armor";
+    setStoreHTML();
     fillStore();
 }
 
 magicStoreButton.onclick = () => {
     currentStoreType = "magic";
+    setStoreHTML();
     fillStore();
+}
+
+function setStoreHTML() {
+    const mainContent = document.querySelector(".main-content");
+    mainContent.innerHTML = storeHTML;
 }
 
 const attributes = ["Strength", "Vitality", "Crit Chance", "Crit Damage", "Agility"];
 const secondaryAttributes = ["Extra Gold", "Extra Experience", "Lower Quest Time"];
 
-itemNames = {
+const itemNames = {
     weapon: ["Celtic Axe", "Iron Sword", "Steel Sword", "Steel Halberd", "Mace", "Spiked Iron Club", "Macuahuitl"],
     offhand: ["Emerald Knight Shield", "shield"],
     helmet: ["Fortified Helmet", "Visor Helmet", "Plate Helmet"],
@@ -162,16 +172,21 @@ placeAllItems();
 
 
 function fillStore() {
+
+    const storeImage = document.querySelector("#storeImage img");
     let possibleItems = []
     switch (currentStoreType) {
         case "weapon":
             possibleItems = ["weapon", "offhand"];
+            storeImage.src = "images/weapon-store.png";
             break;
         case "armor":
             possibleItems = ["armor", "pants", "helmet", "boots"];
+            storeImage.src = "images/armor-store.png";
             break;
         case "magic":
             possibleItems = ["ring", "neck"];
+            storeImage.src = "images/magic-store.png";
             break;
     }
     const storeItems = [];
@@ -187,7 +202,6 @@ fillStore()
 
 // Place the items in the inventory grid
 function placeItemInStore(item, gridCellIndex) {
-    console.log(document.querySelectorAll(".shop-slot"));
     const cell = document.querySelectorAll('.shop-slot')[gridCellIndex];
     cell.innerHTML = ""
     const itemElement = createItemElement(item);
