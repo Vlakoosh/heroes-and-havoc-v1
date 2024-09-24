@@ -340,3 +340,34 @@ body {
     background-color: #23211a;
     opacity: 0;
 }
+
+#playerStatsContainer {
+    background-color: gray;
+    border: 5px ridge black;
+    padding: 15px;
+    width: 520px;
+    height: 600px;
+    margin-top: 50px;
+}
+
+#playerStatsContainer h3 {
+    width: 100%;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.stat-box {
+    width: 480px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 5px ridge black;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.stat-box button {
+    border: 5px ridge black;
+    width: 50px
+}

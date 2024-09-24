@@ -36,4 +36,8 @@ export let storeHTML = "<div class=\"ui-shadow\" id=\"storeImage\"><div class=\"
     "                    <div class=\"slot shop-slot\"></div>\n" +
     "                    <div class=\"slot shop-slot\"></div>\n" +
     "                </div>\n" +
-    "            </div>"
+    "            </div>";
+
+export let heroHTML = "<div id=\"playerStatsContainer\">\n" +
+    "                    <h3>Your Stats</h3>\n" +
+    "                </div>";

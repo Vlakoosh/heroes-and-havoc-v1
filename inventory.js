@@ -1,22 +1,32 @@
 const equipmentSlots = document.querySelectorAll('.slot');
 
-import {storeHTML} from "./components.js";
+import {storeHTML, heroHTML} from "./components.js";
 
 const itemCreateEvent = new Event("item-create");
 
-let playerLvl = 10
-let gold = 3000;
+let playerLvl = 100
+let gold = 3000000000;
+
+let baseStats = {
+    "Vitality": 0,
+    "Agility": 0,
+    "Strength": 0,
+    "Crit Chance": 0,
+    "Crit Damage": 0,
+}
 
 const goldDisplay = document.getElementById("goldCount");
 
 function updateStatsDisplay() {
     goldDisplay.innerText = gold;
 }
+
 updateStatsDisplay()
 
 const shopTypes = ["weapon", "armor", "magic"];
 let currentStoreType = "weapon";
 
+const heroButton = document.getElementById("buttonYourHero");
 const weaponStoreButton = document.getElementById("buttonBlacksmith");
 const armorStoreButton = document.getElementById("buttonArmorSmith");
 const magicStoreButton = document.getElementById("buttonEnchantress");
@@ -38,9 +48,66 @@ magicStoreButton.onclick = () => {
     fillStore();
 }
 
+heroButton.onclick = () => {
+    setHeroHTML();
+    displayHeroStats();
+}
+
 function setStoreHTML() {
     const mainContent = document.querySelector(".main-content");
     mainContent.innerHTML = storeHTML;
+}
+
+function setHeroHTML() {
+    const mainContent = document.querySelector(".main-content");
+    mainContent.innerHTML = heroHTML;
+}
+
+function displayHeroStats() {
+    setHeroHTML()
+    const statsContainer = document.getElementById("playerStatsContainer");
+
+    for (const baseStatName of Object.keys(baseStats)) {
+        const statBox = document.createElement("div");
+        let statFromEquipment = getTotalStatFromItems(baseStatName);
+        statBox.classList.add("stat-box");
+        statBox.innerText = baseStatName + ": " + (baseStats[baseStatName] + statFromEquipment) + " (" + statFromEquipment + " from items)";
+
+
+        const trainButton = document.createElement("button");
+        trainButton.innerText = "+";
+        trainButton.addEventListener("click", () => {
+            if (gold > 10) {
+                trainAttribute(baseStatName);
+                gold -= 10;
+                displayHeroStats();
+                updateStatsDisplay();
+            }
+
+        })
+        statBox.appendChild(trainButton);
+
+        statsContainer.appendChild(statBox);
+    }
+}
+
+function getTotalStatFromItems(statName) {
+    let statAmount = 0;
+
+    const equipmentSlots = document.querySelectorAll(".equipment .item");
+    for (const slot of equipmentSlots) {
+        const attributes = JSON.parse(slot.getAttribute("data-attributes"));
+        let stat = Number(attributes[statName]);
+        if (stat > 0) {
+            statAmount += stat;
+        }
+    }
+
+    return statAmount;
+}
+
+function trainAttribute(attributeName) {
+    baseStats[attributeName] += 127;
 }
 
 const attributes = ["Strength", "Vitality", "Crit Chance", "Crit Damage", "Agility"];
@@ -197,8 +264,6 @@ function fillStore() {
 
 }
 
-fillStore()
-
 
 // Place the items in the inventory grid
 function placeItemInStore(item, gridCellIndex) {
@@ -254,6 +319,7 @@ document.addEventListener('drop', (e) => {
         if (!dropTarget.querySelector('.item')) {
             // Move item to new cell
             dropTarget.appendChild(draggedItem);
+            displayHeroStats();
         }
     }
 
@@ -268,6 +334,7 @@ document.addEventListener('drop', (e) => {
         } else {
             console.log('Item type does not match the slot type.');
         }
+        displayHeroStats();
     }
 
     // Return item to original cell if drop was invalid
@@ -367,7 +434,7 @@ function hideTooltip() {
     tooltip.style.display = 'none';
 }
 
-document.addEventListener("item-create", ()=> {
+document.addEventListener("item-create", () => {
     // Attach the event listeners to the items
     document.querySelectorAll('.item').forEach(item => {
         item.addEventListener('mouseover', showTooltip);
@@ -376,4 +443,6 @@ document.addEventListener("item-create", ()=> {
         item.addEventListener('mousedown', hideTooltip)
     });
 })
+
+document.dispatchEvent(itemCreateEvent);
 
