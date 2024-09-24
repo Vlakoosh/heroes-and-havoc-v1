@@ -7,6 +7,12 @@ const itemCreateEvent = new Event("item-create");
 let playerLvl = 100
 let gold = 3000000000;
 
+let uiState = "";
+
+function setUIState(state){
+    uiState = state;
+}
+
 let baseStats = {
     "Vitality": 0,
     "Agility": 0,
@@ -29,28 +35,32 @@ let currentStoreType = "weapon";
 const heroButton = document.getElementById("buttonYourHero");
 const weaponStoreButton = document.getElementById("buttonBlacksmith");
 const armorStoreButton = document.getElementById("buttonArmorSmith");
-const magicStoreButton = document.getElementById("buttonEnchantress");
+const magicStoreButton = document.getElementById("buttonJeweler");
 
 weaponStoreButton.onclick = () => {
     currentStoreType = "weapon";
     setStoreHTML();
     fillStore();
+    setUIState("store");
 }
 armorStoreButton.onclick = () => {
     currentStoreType = "armor";
     setStoreHTML();
     fillStore();
+    setUIState("store");
 }
 
 magicStoreButton.onclick = () => {
     currentStoreType = "magic";
     setStoreHTML();
     fillStore();
+    setUIState("store");
 }
 
 heroButton.onclick = () => {
     setHeroHTML();
     displayHeroStats();
+    setUIState("stats");
 }
 
 function setStoreHTML() {
@@ -319,7 +329,7 @@ document.addEventListener('drop', (e) => {
         if (!dropTarget.querySelector('.item')) {
             // Move item to new cell
             dropTarget.appendChild(draggedItem);
-            displayHeroStats();
+            if (uiState === "stats") displayHeroStats();
         }
     }
 
@@ -334,7 +344,7 @@ document.addEventListener('drop', (e) => {
         } else {
             console.log('Item type does not match the slot type.');
         }
-        displayHeroStats();
+        if (uiState === "stats") displayHeroStats();
     }
 
     // Return item to original cell if drop was invalid
